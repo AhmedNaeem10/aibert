@@ -1,0 +1,29 @@
+2022/12/25-02:29:56.679 8e03 Reusing MANIFEST /Users/ahmednaeem/vsCodes/aibert_backend/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2022/12/25-02:29:56.679 8e03 Recovering log #274
+2022/12/25-02:29:56.684 8e03 Reusing old log /Users/ahmednaeem/vsCodes/aibert_backend/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000274.log 
+2022/12/25-02:30:39.998 2a517 Level-0 table #287: started
+2022/12/25-02:30:40.031 2a517 Level-0 table #287: 1275703 bytes OK
+2022/12/25-02:30:40.084 2a517 Delete type=0 #274
+2022/12/25-02:30:46.145 2a517 Compacting 1@1 + 9@2 files
+2022/12/25-02:30:46.220 2a517 Generated table #288@1: 51158 keys, 2248696 bytes
+2022/12/25-02:30:46.253 2a517 Generated table #289@1: 4080 keys, 2153841 bytes
+2022/12/25-02:30:46.288 2a517 Generated table #290@1: 3553 keys, 2163236 bytes
+2022/12/25-02:30:46.323 2a517 Generated table #291@1: 3477 keys, 2158335 bytes
+2022/12/25-02:30:46.381 2a517 Generated table #292@1: 29564 keys, 2252386 bytes
+2022/12/25-02:30:46.434 2a517 Generated table #293@1: 24819 keys, 2232943 bytes
+2022/12/25-02:30:46.483 2a517 Generated table #294@1: 36497 keys, 2167047 bytes
+2022/12/25-02:30:46.556 2a517 Generated table #295@1: 98370 keys, 2247489 bytes
+2022/12/25-02:30:46.630 2a517 Generated table #296@1: 98246 keys, 2248332 bytes
+2022/12/25-02:30:46.658 2a517 Generated table #297@1: 15184 keys, 351228 bytes
+2022/12/25-02:30:46.658 2a517 Compacted 1@1 + 9@2 files => 20223533 bytes
+2022/12/25-02:30:46.696 2a517 compacted to: files[ 0 0 10 0 0 0 0 ]
+2022/12/25-02:30:46.696 2a517 Delete type=2 #277
+2022/12/25-02:30:46.696 2a517 Delete type=2 #276
+2022/12/25-02:30:46.696 2a517 Delete type=2 #282
+2022/12/25-02:30:46.696 2a517 Delete type=2 #283
+2022/12/25-02:30:46.696 2a517 Delete type=2 #281
+2022/12/25-02:30:46.696 2a517 Delete type=2 #280
+2022/12/25-02:30:46.696 2a517 Delete type=2 #284
+2022/12/25-02:30:46.696 2a517 Delete type=2 #287
+2022/12/25-02:30:46.696 2a517 Delete type=2 #278
+2022/12/25-02:30:46.696 2a517 Delete type=2 #279

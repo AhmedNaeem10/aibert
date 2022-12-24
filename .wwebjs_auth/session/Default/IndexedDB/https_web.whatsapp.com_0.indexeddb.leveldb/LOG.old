@@ -1,0 +1,28 @@
+2022/12/25-02:29:18.068 11203 Reusing MANIFEST /Users/ahmednaeem/vsCodes/aibert_backend/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2022/12/25-02:29:18.068 11203 Recovering log #261
+2022/12/25-02:29:18.103 11203 Reusing old log /Users/ahmednaeem/vsCodes/aibert_backend/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000261.log 
+2022/12/25-02:29:35.379 11203 Level-0 table #275: started
+2022/12/25-02:29:35.414 11203 Level-0 table #275: 1242706 bytes OK
+2022/12/25-02:29:35.452 11203 Delete type=0 #261
+2022/12/25-02:29:35.479 1661f Compacting 1@1 + 9@2 files
+2022/12/25-02:29:35.543 1661f Generated table #276@1: 41484 keys, 2236549 bytes
+2022/12/25-02:29:35.577 1661f Generated table #277@1: 3014 keys, 2150705 bytes
+2022/12/25-02:29:35.612 1661f Generated table #278@1: 3655 keys, 2162402 bytes
+2022/12/25-02:29:35.649 1661f Generated table #279@1: 5138 keys, 2160468 bytes
+2022/12/25-02:29:35.712 1661f Generated table #280@1: 31033 keys, 2264894 bytes
+2022/12/25-02:29:35.763 1661f Generated table #281@1: 23010 keys, 2216399 bytes
+2022/12/25-02:29:35.817 1661f Generated table #282@1: 51946 keys, 2186912 bytes
+2022/12/25-02:29:35.890 1661f Generated table #283@1: 98329 keys, 2248135 bytes
+2022/12/25-02:29:35.956 1661f Generated table #284@1: 86992 keys, 1977852 bytes
+2022/12/25-02:29:35.956 1661f Compacted 1@1 + 9@2 files => 19604316 bytes
+2022/12/25-02:29:35.994 1661f compacted to: files[ 0 0 9 0 0 0 0 ]
+2022/12/25-02:29:35.994 1661f Delete type=2 #275
+2022/12/25-02:29:35.995 1661f Delete type=2 #266
+2022/12/25-02:29:35.995 1661f Delete type=2 #272
+2022/12/25-02:29:35.995 1661f Delete type=2 #267
+2022/12/25-02:29:35.995 1661f Delete type=2 #271
+2022/12/25-02:29:35.995 1661f Delete type=2 #265
+2022/12/25-02:29:35.995 1661f Delete type=2 #264
+2022/12/25-02:29:35.995 1661f Delete type=2 #270
+2022/12/25-02:29:35.995 1661f Delete type=2 #269
+2022/12/25-02:29:35.995 1661f Delete type=2 #268
