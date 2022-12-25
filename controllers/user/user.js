@@ -95,7 +95,7 @@ exports.reply = async (req, res) => {
             const today = new Date();
             const date = data.week_expiry;
             let parts = date.split("/");
-            const parsed_date = parts[2] + "-" + parts[1] + "-" + parts[0];
+            const parsed_date = parts[2] + "-" + parts[0] + "-" + parts[1];
             const formatted = new Date(parsed_date);
             if(formatted > today){
                 if(req.body.type == "text"){
@@ -261,7 +261,6 @@ exports.reply = async (req, res) => {
             return;
         }
     }).catch((err)=>{
-        console.log(err);
         res.json({code: 400, data: "An error occurred!"})
     })
 }

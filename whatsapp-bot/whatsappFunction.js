@@ -46,7 +46,6 @@ client.on('message', async (msg)=>{
             const data = snapshot.val();
             const keys = Object.keys(data);
             for(let key of keys){
-                if(msg.from == "923143622603@c.us")
                 if(data[key].phone + "@c.us" == msg.from){
                     if(data[key].subscription_type == 2){
                         if(data[key].week_expiry){

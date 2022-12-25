@@ -1,7 +1,7 @@
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 
@@ -32,6 +32,7 @@ exports.ai_generated_msg = async (msg) =>{
       temperature: 0.6,
       max_tokens: 200
     });
+    console.log(completion.data.choices[0].text.trim());
     return completion.data.choices[0].text.trim();
 }
 
