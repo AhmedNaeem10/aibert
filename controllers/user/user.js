@@ -9,15 +9,17 @@ exports.signup = async (req, res) => {
         get(child(ref(db), `Users/`))
         .then((snapshot)=>{
             let data = snapshot.val();
-            const users = Object.values(data);
-            for(let user of users){
-                if(user.email == req.body.email){
-                    res.json({code: 400, data: "Email already exists!"});
-                    return;
-                }
-                if(user.phone == req.body.phone){
-                    res.json({code: 400, data: "Phone number already exists!"});
-                    return;
+            if(data){
+                const users = Object.values(data);
+                for(let user of users){
+                    if(user.email == req.body.email){
+                        res.json({code: 400, data: "Email already exists!"});
+                        return;
+                    }
+                    if(user.phone == req.body.phone){
+                        res.json({code: 400, data: "Phone number already exists!"});
+                        return;
+                    }
                 }
             }
             const auth = getAuth()

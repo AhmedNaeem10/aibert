@@ -13,6 +13,14 @@ const db = require("../database/FirebaseConfig");
 
 var localStorage = new LocalStorage('./scratch'); 
 
+// Here different country codes and corresponding messages can be added:
+
+const country_codes = {
+    "34": "Pls register in the app!",
+    "92": "Please register in the app!",
+    "43": "Pls register in the application!",
+}
+
 client.on('qr', (qr) => {
     console.log('QR RECEIVED:', qr);
     localStorage.setItem("qrcode", qr);
@@ -141,6 +149,7 @@ client.on('message', async (msg)=>{
                             fs.unlink('./temp.png', ()=>{
                                 console.log("Image deleted from server!")
                             })
+                            return;
                         }else{
                             const [rep, cost] = await ai_generated_msg(msg.body);
                             check = false;
@@ -156,17 +165,26 @@ client.on('message', async (msg)=>{
                             }
                             data[key].message_history.unshift(message)
                             update(ref(db, "Users/" + key), {credit: data[key].credit - cost, message_history: data[key].message_history})
+                            return;
                         }
-                        break;
                     }else{
                         msg.reply("Please buy a suitable subscription!");
                         return;
                     }
                 }
             }
+            const codes = Object.keys(country_codes);
+            for(let code of codes){
+                if(msg.from.startsWith(code)){
+                    msg.reply(country_codes[code]);
+                    return;
+                }
+            }
+            msg.reply("Default msg here");
         }catch(err){
             console.log(err);
             msg.reply("Sorry, something bad happened!");
+            return;
         }
     });
 });

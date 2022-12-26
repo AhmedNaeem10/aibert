@@ -1,7 +1,7 @@
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-  apiKey: "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",
+  apiKey: "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",
 });
 const openai = new OpenAIApi(configuration);
 
@@ -53,11 +53,11 @@ exports.midjourney = async (msg) => {
         args: ['--no-sandbox', '--disable-setuid-sandbox']
     });
     const page = await browser.newPage();
-    const url = "https://discord.com/channels/662267976984297473/1008571037862080542"
+    const url = "https://discord.com/channels/662267976984297473/1008571088919343124"
     await page.goto(url);
     await page.waitForSelector('input[name="email"]');
-    await page.type('input[name="email"]', "ahmednaeem.career@gmail.com", {delay: 100})
-    await page.type('input[name="password"]', "9026040An!", {delay: 100});
+    await page.type('input[name="email"]', "sherlockholmes5575@gmail.com", {delay: 100})
+    await page.type('input[name="password"]', "90260405575", {delay: 100});
     await page.click('button[type="submit"]');
     await page.waitForSelector('div[role="textbox"]')
     await page.click('div[role="textbox"]')
@@ -66,7 +66,7 @@ exports.midjourney = async (msg) => {
     await page.keyboard.press("Enter");
     let query = msg
     await page.keyboard.type(query);
-    query = "ahmednaeem_" + query.replaceAll(" ", "_")
+    query = "sherlockholmes5575_" + query.replaceAll(" ", "_")
     await page.keyboard.press("Enter");
     await page.waitForTimeout(45000);
     let link = await page.evaluate((query)=>{
