@@ -76,3 +76,14 @@ body: {
 Note: subscription can be 1 (type 1)/ 2 (type 2) 
 
 ***********************************************
+
+/message_history/UID_HERE
+method: GET
+body: None
+
+example: http://localhost:4000/message_history/9QdHm1UVk6PWLYvUcNRwXjxCp0x1
+
+/qrcode
+method: GET
+body: None
+

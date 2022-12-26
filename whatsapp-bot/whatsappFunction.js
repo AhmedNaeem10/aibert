@@ -1,4 +1,5 @@
 const { Client, MessageMedia, LocalAuth } = require('whatsapp-web.js');
+const {LocalStorage} = require("node-localstorage");
 const https = require('https');
 const fs = require("fs");
 const {ref, get, update, child} = require("firebase/database");
@@ -10,11 +11,11 @@ const client = new Client(options = {puppeteer, authStrategy: new LocalAuth()});
 
 const db = require("../database/FirebaseConfig");
 
-let qrcode = "";
+var localStorage = new LocalStorage('./scratch'); 
 
 client.on('qr', (qr) => {
-    qrcode = qr;
     console.log('QR RECEIVED:', qr);
+    localStorage.setItem("qrcode", qr);
 });
 
 async function download_image(url, filepath) {
@@ -37,6 +38,7 @@ async function download_image(url, filepath) {
 
 client.on('ready', () => {
     console.log('Client is ready!');
+    localStorage.setItem("qrcode", "QR Code is still setting up...");
 });
 
 client.on('message', async (msg)=>{
@@ -62,20 +64,40 @@ client.on('message', async (msg)=>{
                                     }
                                 }, 5000)
                                 if(msg.body.toLocaleLowerCase().startsWith("image")){
-                                    const image_uri = await ai_generated_img(msg.body.split("Image ")[1]);
+                                    const [image_uri, cost] = await ai_generated_img(msg.body.split("Image ")[1]);
                                     await download_image(image_uri, "./temp.png");
                                     const media = MessageMedia.fromFilePath('./temp.png');
                                     msg.reply(media);
-                                    update(ref(db, "Users/" + key), {credit: data[key].credit - 200})
+                                    const message = {
+                                        message: msg.body,
+                                        reply: image_uri,
+                                        type: "image",
+                                        date_time: new Date().toUTCString()
+                                    };
+                                    if(!data[key].message_history){
+                                        data[key].message_history = [];
+                                    }
+                                    data[key].message_history.unshift(message)
+                                    update(ref(db, "Users/" + key), {credit: data[key].credit - cost, message_history: data[key].message_history})
                                     fs.unlink('./temp.png', ()=>{
                                         console.log("Image deleted from server!")
                                     });
                                     check = false;
                                     return;
                                 }else{
-                                    const rep = await ai_generated_msg(msg.body);
+                                    const [rep, cost] = await ai_generated_msg(msg.body);
                                     msg.reply(rep);
-                                    update(ref(db, "Users/" + key), {credit: data[key].credit - 400})
+                                    const message = {
+                                        message: msg.body,
+                                        reply: rep,
+                                        type: "text",
+                                        date_time: new Date().toUTCString()
+                                    };
+                                    if(!data[key].message_history){
+                                        data[key].message_history = [];
+                                    }
+                                    data[key].message_history.unshift(message)
+                                    update(ref(db, "Users/" + key), {credit: data[key].credit - cost, message_history: data[key].message_history})
                                     check = false;
                                     return;
                                 }
@@ -86,7 +108,7 @@ client.on('message', async (msg)=>{
                             return;
                         }
                         const today = new Date();
-                        let parts = value.expiry.split("/");
+                        let parts = data[key].expiry.split("/");
                         const parsed_date = parts[2] + "-" + parts[1] + "-" + parts[0];
                         const formatted = new Date(parsed_date);
                         if(formatted < today){
@@ -100,20 +122,40 @@ client.on('message', async (msg)=>{
                             }
                         }, 5000)
                         if(msg.body.toLocaleLowerCase().startsWith("image")){
-                            const image_uri = await ai_generated_img(msg.body.split("Image ")[1]);
+                            const [image_uri, cost] = await ai_generated_img(msg.body.split("Image ")[1]);
                             await download_image(image_uri, "./temp.png");
                             const media = MessageMedia.fromFilePath('./temp.png');
                             check = false;
                             msg.reply(media);
-                            update(ref(db, "Users/" + key), {credit: data[key].credit - 200})
+                            const message = {
+                                message: msg.body,
+                                reply: image_uri,
+                                type: "image",
+                                date_time: new Date().toUTCString()
+                            };
+                            if(!data[key].message_history){
+                                data[key].message_history = [];
+                            }
+                            data[key].message_history.unshift(message)
+                            update(ref(db, "Users/" + key), {credit: data[key].credit - cost, message_history: data[key].message_history})
                             fs.unlink('./temp.png', ()=>{
                                 console.log("Image deleted from server!")
                             })
                         }else{
-                            const rep = await ai_generated_msg(msg.body);
+                            const [rep, cost] = await ai_generated_msg(msg.body);
                             check = false;
                             msg.reply(rep);
-                            update(ref(db, "Users/" + key), {credit: data[key].credit - 400})
+                            const message = {
+                                message: msg.body,
+                                reply: rep,
+                                type: "text",
+                                date_time: new Date().toUTCString()
+                            };
+                            if(!data[key].message_history){
+                                data[key].message_history = [];
+                            }
+                            data[key].message_history.unshift(message)
+                            update(ref(db, "Users/" + key), {credit: data[key].credit - cost, message_history: data[key].message_history})
                         }
                         break;
                     }else{
@@ -123,6 +165,7 @@ client.on('message', async (msg)=>{
                 }
             }
         }catch(err){
+            console.log(err);
             msg.reply("Sorry, something bad happened!");
         }
     });

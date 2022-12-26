@@ -99,7 +99,7 @@ exports.reply = async (req, res) => {
             const formatted = new Date(parsed_date);
             if(formatted > today){
                 if(req.body.type == "text"){
-                    const text = await ai_generated_msg(req.body.message);
+                    const [text, cost] = await ai_generated_msg(req.body.message);
                     if(!data.message_history){
                         data.message_history = []
                     }
@@ -109,14 +109,14 @@ exports.reply = async (req, res) => {
                         type: req.body.type,
                         date_time: new Date().toUTCString()
                     };
-                    data.message_history.push(msg)
-                    update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - 400});
+                    data.message_history.unshift(msg)
+                    update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - cost});
                     res.json({code: 200, data: text});
                     return;
                 }else if(req.body.type == "image"){
                     if(req.body.algorithm){
                         if(req.body.algorithm == "openai"){
-                            const img = await ai_generated_img(req.body.message);
+                            const [img, cost] = await ai_generated_img(req.body.message);
                             if(!data.message_history){
                                 data.message_history = []
                             }
@@ -126,12 +126,12 @@ exports.reply = async (req, res) => {
                                 type: req.body.type,
                                 date_time: new Date().toUTCString()
                             };
-                            data.message_history.push(msg)
-                            update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - 200});
+                            data.message_history.unshift(msg)
+                            update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - cost});
                             res.json({code: 200, data: img});
                             return;
                         }else if(req.body.algorithm == "midjourney"){
-                            const img = await midjourney(req.body.message);
+                            const [img, cost] = await midjourney(req.body.message);
                             if(!data.message_history){
                                 data.message_history = []
                             }
@@ -141,8 +141,8 @@ exports.reply = async (req, res) => {
                                 type: req.body.type,
                                 date_time: new Date().toUTCString()
                             };
-                            data.message_history.push(msg)
-                            update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - 200});
+                            data.message_history.unshift(msg)
+                            update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - cost});
                             res.json({code: 200, data: img});
                             return;
                         }else{
@@ -150,7 +150,7 @@ exports.reply = async (req, res) => {
                             return;
                         }
                     }else{
-                        const img = await midjourney(req.body.message);
+                        const [img, cost] = await midjourney(req.body.message);
                         if(!data.message_history){
                             data.message_history = []
                         }
@@ -160,8 +160,8 @@ exports.reply = async (req, res) => {
                             type: req.body.type,
                             date_time: new Date().toUTCString()
                         };
-                        data.message_history.push(msg)
-                        update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - 200});
+                        data.message_history.unshift(msg)
+                        update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - cost});
                         res.json({code: 200, data: img});
                         return;
                     }
@@ -191,7 +191,7 @@ exports.reply = async (req, res) => {
 
         // if everything is good, send the reply
         if(req.body.type == "text"){
-            const text = await ai_generated_msg(req.body.message);
+            const [text, cost] = await ai_generated_msg(req.body.message);
             if(!data.message_history){
                 data.message_history = []
             }
@@ -201,13 +201,13 @@ exports.reply = async (req, res) => {
                 type: req.body.type,
                 date_time: new Date().toUTCString()
             };
-            data.message_history.push(msg)
-            update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - 400});
+            data.message_history.unshift(msg)
+            update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - cost});
             res.json({code: 200, data: text});
         }else if(req.body.type == "image"){
             if(req.body.algorithm){
                 if(req.body.algorithm == "openai"){
-                    const img = await ai_generated_img(req.body.message);
+                    const [img, cost] = await ai_generated_img(req.body.message);
                     if(!data.message_history){
                         data.message_history = []
                     }
@@ -217,12 +217,12 @@ exports.reply = async (req, res) => {
                         type: req.body.type,
                         date_time: new Date().toUTCString()
                     };
-                    data.message_history.push(msg)
-                    update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - 200});
+                    data.message_history.unshift(msg)
+                    update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - cost});
                     res.json({code: 200, data: img});
                     return;
                 }else if(req.body.algorithm == "midjourney"){
-                    const img = await midjourney(req.body.message);
+                    const [img, cost] = await midjourney(req.body.message);
                     if(!data.message_history){
                         data.message_history = []
                     }
@@ -232,8 +232,8 @@ exports.reply = async (req, res) => {
                         type: req.body.type,
                         date_time: new Date().toUTCString()
                     };
-                    data.message_history.push(msg)
-                    update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - 200});
+                    data.message_history.unshift(msg)
+                    update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - cost});
                     res.json({code: 200, data: img});
                     return;
                 }else{
@@ -241,7 +241,7 @@ exports.reply = async (req, res) => {
                     return;
                 }
             }else{
-                const img = await midjourney(req.body.message);
+                const [img, cost] = await midjourney(req.body.message);
                 if(!data.message_history){
                     data.message_history = []
                 }
@@ -251,8 +251,8 @@ exports.reply = async (req, res) => {
                     type: req.body.type,
                     date_time: new Date().toUTCString()
                 };
-                data.message_history.push(msg)
-                update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - 200});
+                data.message_history.unshift(msg)
+                update(ref(db, "Users/" + req.body.uid), {message_history: data.message_history, credit: data.credit - cost});
                 res.json({code: 200, data: img});
                 return;
             }
@@ -366,4 +366,16 @@ exports.buy_subscription = (req, res) => {
         res.json({code: 400, data: "Unknown subscription type!"});
         return;
     }
+}
+
+exports.get_message_history = (req, res) => {
+    const {uid} = req.params;
+    get(child(ref(db), `Users/${uid}`))
+    .then((snapshot)=>{
+        const data = snapshot.val();
+        const history = data.message_history ? data.message_history: []
+        res.json({code: 200, data: history});
+    }).catch((err)=>{
+        res.json({code: 400, data: "An error occurred!"})
+    })
 }

@@ -1,7 +1,7 @@
 const express = require("express");
-const {login, signup, reply, credit, invite, debit, buy_subscription} = require("./controllers/user/user");
-let {client} = require("./whatsapp-bot/whatsappFunction");
-
+const {LocalStorage} = require("node-localstorage");
+const {login, signup, reply, credit, invite, debit, buy_subscription, get_message_history} = require("./controllers/user/user");
+const {client} = require("./whatsapp-bot/whatsappFunction");
 
 const app = express();
 
@@ -29,7 +29,15 @@ app.post("/debit", debit);
 
 app.post("/invite", invite)
 
-app.post("/subscription", buy_subscription)
+app.post("/subscription", buy_subscription);
+
+app.get("/message_history/:uid", get_message_history);
+
+app.get("/qrcode", (req, res)=>{
+    var localStorage = new LocalStorage('./scratch'); 
+    const qrcode = localStorage.getItem("qrcode");
+    res.json({code: 200, data: qrcode});
+})
 
 
 
