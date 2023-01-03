@@ -1,5 +1,5 @@
 const { Configuration, OpenAIApi } = require("openai");
-
+const axios = require("axios");
 const configuration = new Configuration({
   apiKey: "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",
 });
@@ -46,51 +46,10 @@ exports.ai_generated_img = async (msg) => {
 }
 
 exports.midjourney = async (msg) => {
-    const puppeteer = require("puppeteer");
-    const browser = await puppeteer.launch({
-        headless: true,
-        defaultViewport: null,
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
-    });
-    const page = await browser.newPage();
-    const url = "https://discord.com/channels/662267976984297473/1008571088919343124"
-    await page.goto(url);
-    await page.waitForSelector('input[name="email"]');
-    await page.type('input[name="email"]', "sherlockholmes5575@gmail.com", {delay: 100})
-    await page.type('input[name="password"]', "90260405575", {delay: 100});
-    await page.click('button[type="submit"]');
-    await page.waitForSelector('div[role="textbox"]')
-    await page.click('div[role="textbox"]')
-    await page.keyboard.type("/imagine");
-    await page.waitForTimeout(2000);
-    await page.keyboard.press("Enter");
-    let query = msg
-    await page.keyboard.type(query);
-    query = "sherlockholmes5575_" + query.replaceAll(" ", "_")
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(45000);
-    let link = await page.evaluate((query)=>{
-        let as = document.querySelectorAll('a')
-        for(let a of as){
-            if(a['href'].includes(query)){
-                return a["href"];
-            }
-        }
-        return null;
-    }, query)
-    if(!link){
-        await page.waitForTimeout(20000);
-        link = await page.evaluate((query)=>{
-            let as = document.querySelectorAll('a')
-            for(let a of as){
-                if(a['href'].includes(query)){
-                    return a["href"];
-                }
-            }
-            return null;
-        }, query)
+    const url = "https://3c2b-65-109-163-192.ngrok.io/"
+    let response = await axios.post(url, {msg: msg})
+    if(response.data.code == 200){
+        return [response.data.data, 200]
     }
-    await browser.close();
-    return [link, 200];
 }
 
